@@ -14,11 +14,13 @@ import fr.alasdiablo.azbrs.race.zombie.ModelZombieMale;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 
+import javax.annotation.Nullable;
 import java.util.UUID;
 
 public class RaceRenderSystem {
@@ -58,6 +60,8 @@ public class RaceRenderSystem {
             case 1:
                 this.cyborgRender(event, gender);
                 break;
+            case 2:
+                this.zombieRender(event, gender);
             default:
                 break;
         }
@@ -92,6 +96,28 @@ public class RaceRenderSystem {
      */
     private void cyborgRender(RenderPlayerEvent.Pre event, IGender gender) {
         if (gender.getGender() == 1) {
+            this.render(this.cyborgFemaleRender, this.cyborgFemaleModel, event, "cyborg_female");
+        } else {
+            this.render(this.cyborgMaleRender, this.cyborgMaleModel, event, "cyborg_male");
+        }
+    }
+
+    /**
+     *
+     * @param event
+     * @param gender
+     */
+    private void zombieRender(RenderPlayerEvent.Pre event, IGender gender) {
+        if (gender.getGender() == 1) {
+            this.render(this.zombieFemaleRender, this.zombieFemaleModel, event, "zombie_female");
+        } else {
+            this.render(this.zombieMaleRender, this.zombieMaleModel, event, "zombie_male");
+        }
+    }
+
+    /*
+    private void cyborgRender(RenderPlayerEvent.Pre event, IGender gender) {
+        if (gender.getGender() == 1) {
             event.setCanceled(true);
             this.cyborgFemaleRender = new RenderLivingBase<AbstractClientPlayer>(event.getRenderer().getRenderManager(), this.cyborgFemaleModel, 0.5F){
                 @Override
@@ -111,14 +137,31 @@ public class RaceRenderSystem {
             this.cyborgMaleRender.doRender((AbstractClientPlayer) event.getEntityLiving(), event.getX(), event.getY(), event.getZ(), 0, event.getPartialRenderTick());
         }
     }
+     */
 
+    /*
     private void zombieRender(RenderPlayerEvent.Pre event, IGender gender) {
         if (gender.getGender() == 1) {
             event.setCanceled(true);
-            this.zombieFemaleRender
+            this.zombieFemaleRender = new RenderLivingBase<AbstractClientPlayer>(event.getRenderer().getRenderManager(), this.zombieFemaleModel, 0.5F) {
+                @Override
+                protected ResourceLocation getEntityTexture(AbstractClientPlayer entity) {
+                    return new ResourceLocation(Reference.MOD_ID + ":" + "textures/race/zombie_female.png");
+                }
+            };
+            this.zombieFemaleRender.doRender((AbstractClientPlayer) event.getEntityLiving(), event.getX(), event.getY(), event.getZ(), 0, event.getPartialRenderTick());
+        } else {
+            event.setCanceled(true);
+            this.zombieMaleRender = new RenderLivingBase<AbstractClientPlayer>(event.getRenderer().getRenderManager(), this.zombieFemaleModel, 0.5F) {
+                @Override
+                protected ResourceLocation getEntityTexture(AbstractClientPlayer entity) {
+                    return new ResourceLocation(Reference.MOD_ID + ":" + "textures/race/zombie_male.png");
+                }
+            };
+            this.zombieMaleRender.doRender((AbstractClientPlayer) event.getEntityLiving(), event.getX(), event.getY(), event.getZ(), 0, event.getPartialRenderTick());
         }
     }
-
+    */
     /**
      * make the render of the player
      * @param renderLivingBase the player render

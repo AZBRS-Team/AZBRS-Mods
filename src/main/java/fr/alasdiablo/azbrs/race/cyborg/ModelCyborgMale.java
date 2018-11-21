@@ -34,8 +34,6 @@ public class ModelCyborgMale extends ModelBiped {
         textureWidth = 128;
         textureHeight = 64;
 
-        ///*
-
         antena1 = new ModelRenderer(this, 64, 32);
         antena1.addBox(4F, -11F, -2F, 1, 5, 1);
         antena1.setRotationPoint(0F, 0F, 0F);
